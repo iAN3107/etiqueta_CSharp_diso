@@ -9,3 +9,4 @@ C:\Users\cpd3.DISO\Projetos\CSharp\Etiqueta\Etiqueta\obj\Debug\Etiqueta.csproj.C
 C:\Users\cpd3.DISO\Projetos\CSharp\Etiqueta\Etiqueta\obj\Debug\Etiqueta.exe
 C:\Users\cpd3.DISO\Projetos\CSharp\Etiqueta\Etiqueta\obj\Debug\Etiqueta.pdb
 C:\Users\cpd3.DISO\Projetos\CSharp\Etiqueta\Etiqueta\obj\Debug\Etiqueta.Form1.resources
+C:\Users\cpd3.DISO\Projetos\CSharp\Etiqueta\Etiqueta\obj\Debug\Etiqueta.Form2.resources
