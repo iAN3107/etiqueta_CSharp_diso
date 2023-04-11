@@ -18,11 +18,13 @@ namespace Etiqueta
         public String Bloco { get; set; }
         public String Nivel { get; set; }
         public String Apartamento { get; set; }
+        public String Box { get; set; }
+        public String Endereco { get; set; }
+        public int NumeroEtiqueta { get; set; }
+        public int TotalEtiqueta { get; set; }
 
-        public Destrinche(string manifesto, string cliente, 
-            string delivery, string codProduto, string produto, 
-            string deposito, string rua, string bloco, string nivel, 
-            string apartamento)
+
+        public Destrinche(string manifesto, string cliente, string delivery, string codProduto, string produto, string deposito, string rua, string bloco, string nivel, string apartamento, string box, string endereco, int numeroEtiqueta, int totalEtiqueta)
         {
             Manifesto = manifesto;
             Cliente = cliente;
@@ -34,6 +36,10 @@ namespace Etiqueta
             Bloco = bloco;
             Nivel = nivel;
             Apartamento = apartamento;
+            Box = box;
+            Endereco = endereco;
+            NumeroEtiqueta = numeroEtiqueta;
+            TotalEtiqueta = totalEtiqueta;
         }
     }
 }

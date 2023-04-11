@@ -22,7 +22,6 @@ namespace Etiqueta
         private void Form1_Load(object sender, EventArgs e)
         {
             textoLog.Text = "LOG DE IMPRESSÃO";
-
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -57,4 +56,3 @@ namespace Etiqueta
         }
     }
 }
-
