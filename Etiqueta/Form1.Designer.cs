@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.label1 = new System.Windows.Forms.Label();
             this.textoManifesto = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
@@ -56,6 +57,7 @@
             this.textoManifesto.Name = "textoManifesto";
             this.textoManifesto.Size = new System.Drawing.Size(243, 22);
             this.textoManifesto.TabIndex = 1;
+            this.textoManifesto.TextChanged += new System.EventHandler(this.textoManifesto_TextChanged);
             // 
             // button1
             // 
@@ -70,10 +72,11 @@
             // 
             // textoLog
             // 
-            this.textoLog.Enabled = false;
             this.textoLog.Location = new System.Drawing.Point(12, 179);
             this.textoLog.Multiline = true;
             this.textoLog.Name = "textoLog";
+            this.textoLog.ReadOnly = true;
+            this.textoLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textoLog.Size = new System.Drawing.Size(243, 109);
             this.textoLog.TabIndex = 3;
             // 
@@ -117,6 +120,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.Name = "Form1";

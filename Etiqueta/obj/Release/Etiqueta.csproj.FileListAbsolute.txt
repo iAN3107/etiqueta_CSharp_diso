@@ -1,0 +1,12 @@
+C:\Users\cpd3.DISO\Projetos\CSharp\Etiqueta\Etiqueta\bin\Release\Etiqueta.exe.config
+C:\Users\cpd3.DISO\Projetos\CSharp\Etiqueta\Etiqueta\bin\Release\Etiqueta.exe
+C:\Users\cpd3.DISO\Projetos\CSharp\Etiqueta\Etiqueta\bin\Release\Etiqueta.pdb
+C:\Users\cpd3.DISO\Projetos\CSharp\Etiqueta\Etiqueta\obj\Release\Etiqueta.csproj.AssemblyReference.cache
+C:\Users\cpd3.DISO\Projetos\CSharp\Etiqueta\Etiqueta\obj\Release\Etiqueta.csproj.SuggestedBindingRedirects.cache
+C:\Users\cpd3.DISO\Projetos\CSharp\Etiqueta\Etiqueta\obj\Release\Etiqueta.Form1.resources
+C:\Users\cpd3.DISO\Projetos\CSharp\Etiqueta\Etiqueta\obj\Release\Etiqueta.Form2.resources
+C:\Users\cpd3.DISO\Projetos\CSharp\Etiqueta\Etiqueta\obj\Release\Etiqueta.Properties.Resources.resources
+C:\Users\cpd3.DISO\Projetos\CSharp\Etiqueta\Etiqueta\obj\Release\Etiqueta.csproj.GenerateResource.cache
+C:\Users\cpd3.DISO\Projetos\CSharp\Etiqueta\Etiqueta\obj\Release\Etiqueta.csproj.CoreCompileInputs.cache
+C:\Users\cpd3.DISO\Projetos\CSharp\Etiqueta\Etiqueta\obj\Release\Etiqueta.exe
+C:\Users\cpd3.DISO\Projetos\CSharp\Etiqueta\Etiqueta\obj\Release\Etiqueta.pdb

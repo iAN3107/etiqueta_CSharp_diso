@@ -26,15 +26,30 @@ namespace Etiqueta
 
         private void button1_Click(object sender, EventArgs e)
         {
-            String impressora = Dados.retornaImpressora();
-            String manifesto = textoManifesto.Text;
-            if (!Dados.verificaExistenciaManifesto(manifesto))
+            try
             {
-                MessageBox.Show("Este código de manifesto não existe!");
-            }
-            else {
-                Dados.retornaEtiquetasDestrinche(manifesto, impressora);
-                textoLog.Text = textoLog.Text + "\r\n" + manifesto;
+                button1.Enabled = false;
+                String impressora = Dados.retornaImpressora();
+                String manifesto = textoManifesto.Text;
+                if (!Dados.verificaExistenciaManifesto(manifesto))
+                {
+                    MessageBox.Show("Este código de manifesto não existe!");
+                }
+                else
+                {
+                    int totalEtiquetas = Dados.retornaEtiquetasDestrinche(manifesto, impressora);
+                    DateTime now = DateTime.Now;
+                    string data = now.ToShortDateString();
+                    string hora = now.ToShortTimeString();
+                    textoLog.Text = textoLog.Text + "\r\n\r\n" + data + "  " + hora;
+                    textoLog.Text = textoLog.Text + "\r\n" + "Manifesto: " + manifesto;
+                    textoLog.Text = textoLog.Text + "\r\n" + "Etiquetas sendo emitidas: " + totalEtiquetas;
+
+                    button1.Enabled = true;
+                }
+                button1.Enabled = true;
+            } catch (Exception ex) {
+                MessageBox.Show(ex.ToString());
             }
             //Dados.retornaEtiquetasDestrinche();
         }
@@ -53,6 +68,11 @@ namespace Etiqueta
         {
             Form2 form2 = new Form2();
             form2.ShowDialog();
+        }
+
+        private void textoManifesto_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
