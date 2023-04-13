@@ -10,3 +10,14 @@ C:\Users\cpd3.DISO\Projetos\CSharp\Etiqueta\Etiqueta\obj\Debug\Etiqueta.exe
 C:\Users\cpd3.DISO\Projetos\CSharp\Etiqueta\Etiqueta\obj\Debug\Etiqueta.pdb
 C:\Users\cpd3.DISO\Projetos\CSharp\Etiqueta\Etiqueta\obj\Debug\Etiqueta.Form1.resources
 C:\Users\cpd3.DISO\Projetos\CSharp\Etiqueta\Etiqueta\obj\Debug\Etiqueta.Form2.resources
+C:\Users\cpd3.DISO\Projetos\CSharp\Etiqueta\Etiqueta\bin\Debug\x86\sqlite3.dll
+C:\Users\cpd3.DISO\Projetos\CSharp\Etiqueta\Etiqueta\bin\Debug\x64\sqlite3.dll
+C:\Users\cpd3.DISO\Projetos\CSharp\Etiqueta\Etiqueta\bin\Debug\EntityFramework.dll
+C:\Users\cpd3.DISO\Projetos\CSharp\Etiqueta\Etiqueta\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\cpd3.DISO\Projetos\CSharp\Etiqueta\Etiqueta\bin\Debug\System.Data.SQLite.dll
+C:\Users\cpd3.DISO\Projetos\CSharp\Etiqueta\Etiqueta\bin\Debug\System.Data.SQLite.EF6.dll
+C:\Users\cpd3.DISO\Projetos\CSharp\Etiqueta\Etiqueta\bin\Debug\System.Data.SQLite.Linq.dll
+C:\Users\cpd3.DISO\Projetos\CSharp\Etiqueta\Etiqueta\bin\Debug\EntityFramework.xml
+C:\Users\cpd3.DISO\Projetos\CSharp\Etiqueta\Etiqueta\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\cpd3.DISO\Projetos\CSharp\Etiqueta\Etiqueta\bin\Debug\System.Data.SQLite.xml
+C:\Users\cpd3.DISO\Projetos\CSharp\Etiqueta\Etiqueta\obj\Debug\Etiqueta.csproj.CopyComplete

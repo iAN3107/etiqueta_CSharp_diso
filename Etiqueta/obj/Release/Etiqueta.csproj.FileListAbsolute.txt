@@ -10,3 +10,14 @@ C:\Users\cpd3.DISO\Projetos\CSharp\Etiqueta\Etiqueta\obj\Release\Etiqueta.csproj
 C:\Users\cpd3.DISO\Projetos\CSharp\Etiqueta\Etiqueta\obj\Release\Etiqueta.csproj.CoreCompileInputs.cache
 C:\Users\cpd3.DISO\Projetos\CSharp\Etiqueta\Etiqueta\obj\Release\Etiqueta.exe
 C:\Users\cpd3.DISO\Projetos\CSharp\Etiqueta\Etiqueta\obj\Release\Etiqueta.pdb
+C:\Users\cpd3.DISO\Projetos\CSharp\Etiqueta\Etiqueta\bin\Release\x86\sqlite3.dll
+C:\Users\cpd3.DISO\Projetos\CSharp\Etiqueta\Etiqueta\bin\Release\x64\sqlite3.dll
+C:\Users\cpd3.DISO\Projetos\CSharp\Etiqueta\Etiqueta\bin\Release\EntityFramework.dll
+C:\Users\cpd3.DISO\Projetos\CSharp\Etiqueta\Etiqueta\bin\Release\EntityFramework.SqlServer.dll
+C:\Users\cpd3.DISO\Projetos\CSharp\Etiqueta\Etiqueta\bin\Release\System.Data.SQLite.dll
+C:\Users\cpd3.DISO\Projetos\CSharp\Etiqueta\Etiqueta\bin\Release\System.Data.SQLite.EF6.dll
+C:\Users\cpd3.DISO\Projetos\CSharp\Etiqueta\Etiqueta\bin\Release\System.Data.SQLite.Linq.dll
+C:\Users\cpd3.DISO\Projetos\CSharp\Etiqueta\Etiqueta\bin\Release\EntityFramework.xml
+C:\Users\cpd3.DISO\Projetos\CSharp\Etiqueta\Etiqueta\bin\Release\EntityFramework.SqlServer.xml
+C:\Users\cpd3.DISO\Projetos\CSharp\Etiqueta\Etiqueta\bin\Release\System.Data.SQLite.xml
+C:\Users\cpd3.DISO\Projetos\CSharp\Etiqueta\Etiqueta\obj\Release\Etiqueta.csproj.CopyComplete

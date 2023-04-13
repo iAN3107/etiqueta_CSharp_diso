@@ -5,36 +5,91 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data.SQLite;
 
 namespace Etiqueta
 { 
     internal class Dados
     {
-        public static string connectionString = @"Data Source=192.168.10.216;Initial Catalog=ETIQUETAS_WMS;User ID=sa;Password=Sa10094265";
-        static SqlConnection connection = new SqlConnection(connectionString);
-        
-        public static string connectionWmsString = @"Data Source=192.168.10.236;Initial Catalog=BRKDSO;User ID=wms;Password=wms";
+        //public static string connectionString = @"Data Source=192.168.10.216;Initial Catalog=ETIQUETAS_WMS;User ID=sa;Password=Sa10094265";
+        //static SqlConnection connection = new SqlConnection(connectionString);
+
+        static SQLiteConnection connection = new SQLiteConnection(@"Data Source="+ @Application.StartupPath.ToString() + @"\Etiquetas.db;Version=3;");
+
+        static Banco reabanco = retornaBanco();
+
+        public static string connectionWmsString = @"Data Source=" + reabanco.Ip +
+            ";Initial Catalog=" + reabanco.NomeBanco + 
+            "; User ID=" + reabanco.Usuario + ";Password=" + reabanco.Senha + ";";
+
         static SqlConnection connectionWms = new SqlConnection(connectionWmsString);
 
-        public static void salvaNovaImpressora(String nomeimpressora)
+        public static void salvaNovaConfig(string nomeImpressora, string ip, string usuario, string senha, string nomeBanco)
         {
-            string queryString = "UPDATE config SET nomeImpressora = '" + nomeimpressora + "'";
-            SqlCommand command = new SqlCommand(queryString, connection);
+            DeletaConfiguracaoImpressora();
+            string queryString = "insert into config values ('" + nomeImpressora + "','" + ip + "','" + usuario + "','" +senha + "','" +nomeBanco + "')";
+            SQLiteCommand command = new SQLiteCommand(queryString, connection);
             connection.Open();
             command.ExecuteNonQuery();
             connection.Close();
         }
 
+        public static Banco retornaBanco() {
+            string queryString = "SELECT * FROM [config]";
+            SQLiteCommand command = new SQLiteCommand(queryString, connection);
+            //Console.WriteLine(Application.StartupPath.ToString());
+            String impressora = @"";
+            String ip = @"";
+            String user = @"";
+            String pas = @"";
+            String nomeBanco = @"";
+
+            Banco banco = new Banco(impressora, ip, user, pas, nomeBanco);
+
+            connection.Open();
+            SQLiteDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                String Impressora = reader["nomeImpressora"].ToString();
+                String Ip = reader["ip"].ToString();
+                String User = reader["user"].ToString();
+                String Pas = reader["pas"].ToString();
+                String NomeBanco = reader["nomeBanco"].ToString();
+
+                impressora = Impressora;
+                ip = Ip;
+                user = User;
+                pas = Pas;
+                nomeBanco = NomeBanco;
+
+                banco = new Banco(impressora, ip, user, pas, nomeBanco);
+                //Banco banco = new Banco(impressora, ip, user, pas);
+            }
+            connection.Close();
+
+
+
+            return banco;
+        }
+
+        public static void DeletaConfiguracaoImpressora()
+        {
+            string queryString = "delete from config";
+            SQLiteCommand command = new SQLiteCommand(queryString, connection);
+            connection.Open();
+            command.ExecuteNonQuery();
+            connection.Close();
+        }
 
         public static String retornaImpressora()
         {
-            string queryString = "SELECT nomeImpressora FROM config";
-            SqlCommand command = new SqlCommand(queryString, connection);
-
+            string queryString = "SELECT nomeImpressora FROM [config]";
+            SQLiteCommand command = new SQLiteCommand(queryString, connection);
+            //Console.WriteLine(Application.StartupPath.ToString());
             String nomeImpressora = @"";
 
             connection.Open();
-            SqlDataReader reader = command.ExecuteReader();
+            SQLiteDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
                 String Impressora = reader["nomeImpressora"].ToString();
@@ -49,11 +104,11 @@ namespace Etiqueta
         static int retornaNumeroTotalImpressora()
         {
             int numeracaoEtiquetaTotal = 0;
-            string selectQueryString = "SELECT * FROM DESTRINCHE ORDER BY ENDERECO";
-            SqlCommand command = new SqlCommand(selectQueryString, connection);
+            string selectQueryString = "select * from destrinche order by deposito, rua, bloco";
+            SQLiteCommand command = new SQLiteCommand(selectQueryString, connection);
             connection.Open();
 
-            SqlDataReader reader = command.ExecuteReader();
+            SQLiteDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
                 numeracaoEtiquetaTotal++;
@@ -66,14 +121,14 @@ namespace Etiqueta
 
         static void imprimeTudoNoBancoDeDadosEDelete(String impressora)
         {
-            string selectQueryString = "SELECT * FROM DESTRINCHE ORDER BY ENDERECO";
+            string selectQueryString = "select * from destrinche order by deposito, rua, bloco";
             int numeracaoEtiqueta = 0;
             int numeracaoTotalEtiqueta = retornaNumeroTotalImpressora();
 
-            SqlCommand command = new SqlCommand(selectQueryString, connection);
+            SQLiteCommand command = new SQLiteCommand(selectQueryString, connection);
             connection.Open();
 
-            SqlDataReader reader = command.ExecuteReader();
+            SQLiteDataReader reader = command.ExecuteReader();
 
 
 
@@ -115,6 +170,7 @@ namespace Etiqueta
         {
             try
             {
+                Convert.ToInt64(manifesto);
                 string queryString = "set nocount on\r\nif exists (select * from tempdb..sysobjects where name = '##ordint') drop table ##ordint\r\n\r\nselect number, DeliveryNumber, LoadNumber,\r\nconvert(varchar,convert(varchar,isnull(CustomerCode,''))\r\n-- mudado aqui\r\n--+'-'+convert(varchar,isnull(CustomerName,''))\r\n)\r\n'Cliente' into ##ordint\r\nfrom WMS_SAP_INTEGRATOR.dbo.[Order] \r\nwhere CreatedAt>=getdate ()-5 and ProcessedAt is not null AND synclog is null\r\n\r\n\r\nif exists (select * from tempdb..sysobjects where name = '##resultado') drop table ##resultado\r\n\r\nselect \r\nom.number 'Carga',\r\nom.Box 'Box',\r\nwo.Cliente 'Cliente',\r\noi.DeliveryNumber 'Delivery',\r\nconvert(varchar,\r\nconvert(varchar,ad.warehouse)+'-'+convert(varchar,ad.Street)+'-'+convert(varchar,ad.Block)+'-'+convert(varchar,ad.Level)+'-'+convert(varchar,ad.Apartment)) 'Endereco',\r\np.code 'CODE_Produto',\r\np.name 'Name_Produto',\r\nc1.name 'Unidade de Separação',\r\nc2.name 'Unidade de Armazenagem',\r\nc3.name 'Unidade de Venda',\r\ncase when p.GreatnessSeparation = 1 \r\n\tthen convert(numeric(10,2),sum(oi.UnitAmount)) \r\n\telse convert(numeric(10,2),sum(oi.MasterAmount)) end 'Caixas',\r\ncase when p.GreatnessSeparation = 1\r\n\tthen convert(numeric(10,2),sum(oi.MasterAmount))\r\n\telse convert(numeric(10,2),sum(oi.UnitAmount)) end 'Unidade',\r\nconvert(numeric(10,2),sum(oi.Ammount)) 'Separado',\r\noi.factor 'Fator',\r\nconvert(varchar,ad.warehouse) Deps,\r\nconvert(varchar,ad.Street)Ruas,\r\nconvert(varchar,ad.Block)Blocos,\r\nconvert(varchar,ad.Level)Nivels,\r\nconvert(varchar,ad.Apartment) aptos,\r\nrank( )over( order by ad.warehouse,ad.Street,ad.Block,ad.Level,ad.Apartment, om.box, wo.cliente,p.code)SEQ,\r\ncase \r\n\t--when ad.Warehouse = 2 then 'Climatizado' \r\n\twhen (sum(oi.MasterAmount)>0 or p.GreatnessSeparation = 1) then 'Grandeza' else 'Fracionado' end Tipo into ##resultado\r\n from WMS_SAP.dbo.orderitem oi\r\njoin WMS_SAP.dbo.[order] o on o.id = oi.[order]\r\njoin ##ordint wo on \r\n\t\to.LoadNumber = wo.LoadNumber collate SQL_Latin1_General_CP1_CI_AS and \r\n\t\to.InvoiceNumber = wo.DeliveryNumber collate SQL_Latin1_General_CP1_CI_AS and \r\n\t\to.Number = wo.Number collate SQL_Latin1_General_CP1_CI_AS\r\njoin WMS_SAP.dbo.OrderManifest om on om.id = o.OrderManifest\r\njoin WMS_SAP.dbo.product p on p.id = oi.Product\r\njoin WMS_SAP.dbo.class c1 on c1.id = oi.Unit -- Unidade Pedido\r\njoin WMS_SAP.dbo.class c2 on c2.id = p.StorageUnit -- Unidade de Armazenagem\r\njoin WMS_SAP.dbo.class c3 on c3.id = p.SalesUnit -- Unidade de Venda\r\njoin WMS_SAP.dbo.Picking pi on pi.Product = p.Id\r\njoin WMS_SAP.dbo.Address ad on pi.Address = ad.id\r\n\r\n-- mudado daqui\r\n\r\nwhere om.date >=getdate()-2 \r\n\r\n--and om.number = 8028373507\r\n\r\n\r\n\r\ngroup by \r\n\tp.code,p.name ,oi.DeliveryNumber,ad.warehouse,ad.Street,ad.Block,ad.Level,ad.Apartment,c1.name,c2.name,c3.name,wo.Cliente,om.Number,om.Box ,oi.factor,p.GreatnessSeparation\r\n--order by om.Box, Cliente,CODE_Produto\r\n-- até aqui\r\ndelete from ##resultado where Tipo <> 'Grandeza'\r\nset nocount off\r\n\r\nselect Carga, Box, Cliente, Delivery,Endereco, CODE_Produto,Name_Produto,Caixas,Deps,Ruas,Blocos,Nivels,Aptos from ##resultado where carga = " + manifesto + "";
                 SqlCommand command = new SqlCommand(queryString, connectionWms);
                 connectionWms.Open();
@@ -131,8 +187,13 @@ namespace Etiqueta
                 }
             }
             catch (System.Data.SqlClient.SqlException ex) {
-                MessageBox.Show("É permitido apenas números no manifesto!");
+                MessageBox.Show(ex.Message.ToString());
+                Console.WriteLine(ex.ToString());
                 connectionWms.Close();
+                return false;
+            } catch (System.FormatException ex)
+            {
+                MessageBox.Show("É possível apenas inserir números no campo Manifesto!");
                 return false;
             }
         }
@@ -140,7 +201,7 @@ namespace Etiqueta
         public static void insereEmBancoASerImpresso(Destrinche destrinche)
         {
             string queryString = "insert into destrinche values('"+ destrinche.Manifesto + "','" + destrinche.Cliente + "','" + destrinche.Delivery + "','" + destrinche.CodProduto + "','" + destrinche.Produto + "','" + destrinche.Deposito +"','" + destrinche.Rua + "','" + destrinche.Bloco + "','" + destrinche.Nivel + "','" + destrinche.Apartamento + "','" + destrinche.Box + "','" + destrinche.Endereco + "'," + destrinche.NumeroEtiqueta + "," + destrinche.TotalEtiqueta + ")";
-            SqlCommand command = new SqlCommand(queryString, connection);
+            SQLiteCommand command = new SQLiteCommand(queryString, connection);
             connection.Open();
             command.ExecuteNonQuery();
             connection.Close();
@@ -150,7 +211,7 @@ namespace Etiqueta
         public static void updateTotalEtiquetasEmBancoASerImpresso(String Cliente, int total)
         {
             string queryString = "UPDATE destrinche SET totalEtiqueta = " + total.ToString() +" WHERE cliente = '" + Cliente.ToString() + "'";
-            SqlCommand command = new SqlCommand(queryString, connection);
+            SQLiteCommand command = new SQLiteCommand(queryString, connection);
             connection.Open();
             command.ExecuteNonQuery();
             connection.Close();
@@ -159,7 +220,7 @@ namespace Etiqueta
         public static void deletaTudoBancoDestrinche()
         {
             string deleteQueryString = "DELETE FROM DESTRINCHE";
-            SqlCommand command = new SqlCommand(deleteQueryString, connection);
+            SQLiteCommand command = new SQLiteCommand(deleteQueryString, connection);
             connection.Open();
             command.ExecuteNonQuery();
             connection.Close();
@@ -167,6 +228,7 @@ namespace Etiqueta
 
         public static int retornaEtiquetasDestrinche(String manifesto, String impressora)
         {
+            reabanco = retornaBanco();
             deletaTudoBancoDestrinche();
             List<Destrinche> listaItems = new List<Destrinche>();
             String ultimoCliente = "";
