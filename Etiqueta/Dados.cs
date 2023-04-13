@@ -46,16 +46,41 @@ namespace Etiqueta
 
         }
 
-        static void imprimeTudoNoBancoDeDadosEDelete(String impressora)
+        static int retornaNumeroTotalImpressora()
         {
+            int numeracaoEtiquetaTotal = 0;
             string selectQueryString = "SELECT * FROM DESTRINCHE ORDER BY ENDERECO";
             SqlCommand command = new SqlCommand(selectQueryString, connection);
             connection.Open();
 
             SqlDataReader reader = command.ExecuteReader();
-
             while (reader.Read())
             {
+                numeracaoEtiquetaTotal++;
+            }
+
+            connection.Close();
+
+            return numeracaoEtiquetaTotal;
+        }
+
+        static void imprimeTudoNoBancoDeDadosEDelete(String impressora)
+        {
+            string selectQueryString = "SELECT * FROM DESTRINCHE ORDER BY ENDERECO";
+            int numeracaoEtiqueta = 0;
+            int numeracaoTotalEtiqueta = retornaNumeroTotalImpressora();
+
+            SqlCommand command = new SqlCommand(selectQueryString, connection);
+            connection.Open();
+
+            SqlDataReader reader = command.ExecuteReader();
+
+
+
+              while (reader.Read())
+            {
+
+                numeracaoEtiqueta++;
 
                 String Manifesto = reader["Manifesto"].ToString();
                 String Cliente = reader["Cliente"].ToString();
@@ -77,18 +102,10 @@ namespace Etiqueta
                 Destrinche destrinche = new Destrinche(Manifesto, Cliente, Delivery, CodProduto, Produto, Deposito, Rua, Bloco, Nivel, Apartamento, Box, Endereco,
                     valorTotalNmrEtiqueta, valorTotalNmrTotalEtiqueta);
 
-                imprimeItems(destrinche, impressora);
+                imprimeItems(destrinche, impressora, numeracaoTotalEtiqueta, numeracaoEtiqueta);
+
+                //Console.WriteLine("Total etiquetas " + numeracaoEtiquetaTotal.ToString());
             }
-
-            DateTime now = DateTime.Now;
-            string data = now.ToShortDateString();
-            string hora = now.ToShortTimeString();
-            Console.WriteLine("Data atual: " + now.ToShortDateString());
-            Console.WriteLine("Hora atual: " + now.ToLongTimeString());
-
-            //command = new SqlCommand(deleteQueryString, connection);
-            //command.ExecuteNonQuery();
-
 
             connection.Close();
         }
@@ -246,7 +263,8 @@ namespace Etiqueta
             System.Console.WriteLine("teste");
         }
 
-        public static void imprimeItems(Destrinche destrinche, String impressora)
+        public static void imprimeItems(Destrinche destrinche, String impressora,
+            int numeroTotalEtiquetas, int numeracaoEtiqueta)
         {
             int metadeComprimento = destrinche.Produto.Length / 2;
 
@@ -254,7 +272,7 @@ namespace Etiqueta
             String produtoParte2 = destrinche.Produto.Substring(metadeComprimento);
 
             DateTime now = DateTime.Now;
-            string data = now.ToShortDateString();
+            string data = @now.ToShortDateString();
             string hora = now.ToShortTimeString();
 
             RawPrinterHelper.SendStringToPrinter(szPrinterName: impressora, szString:
@@ -288,9 +306,10 @@ namespace Etiqueta
                 "\r\n^FT494,178^A0N,28,28^FH\\^FDPRODUTO^FS" +
                 "\r\n^FT339,207^A0N,29,38^FB437,1,0,C^FH\\^FD" + produtoParte1 + "^FS" +
                 "\r\n^FT339,243^A0N,29,38^FB437,1,0,C^FH\\^FD"+ produtoParte2 + "^FS" +
-                "\r\n^FT26,47^A0N,28,28^FH\\^FD" + @data.ToString() +"^ FS" +
-                "\r\n^FT693,47^A0N,28,28^FH\\^FD" + @hora.ToString() + "^FS" +
+                "\r\n^FT18,47^A0N,28,28^FH\\^FD" + @data.ToString() +"^FS" +
+                "\r\n^FT169,47^A0N,28,28^FH\\^FD" + @hora.ToString() + "^FS" +
                 "\r\n^FT371,134^A0N,28,28^FH\\^FD" + destrinche.Box + "^FS" +
+                "\r\n^FT709,47^A0N,28,28^FH\\^FD"+ numeracaoEtiqueta.ToString() +"/"+ numeroTotalEtiquetas.ToString() +"^FS" +
                 "\r\n^PQ1,0,1,Y^XZ\r\n");
 
             
