@@ -99,7 +99,7 @@ namespace Etiqueta
                 int valorTotalNmrEtiqueta = Convert.ToInt32(Double.Parse(NumeroEtiqueta));
                 int valorTotalNmrTotalEtiqueta = Convert.ToInt32(Double.Parse(TotalEtiqueta));
 
-                Destrinche destrinche = new Destrinche(Manifesto, Cliente, Delivery, CodProduto, Produto, Deposito, Rua, Bloco, Nivel, Apartamento, Box, Endereco,
+                Destrinche destrinche = new Destrinche(Manifesto, Cliente, Delivery, CodProduto, Produto, Convert.ToInt32(Deposito), Convert.ToInt32(Rua), Convert.ToInt32(Bloco), Convert.ToInt32(Nivel), Convert.ToInt32(Apartamento), Box, Endereco,
                     valorTotalNmrEtiqueta, valorTotalNmrTotalEtiqueta);
 
                 imprimeItems(destrinche, impressora, numeracaoTotalEtiqueta, numeracaoEtiqueta);
@@ -210,7 +210,13 @@ namespace Etiqueta
                 {
                     contagemProduto++; 
                     contagemEtiquetasTotal++;
-                    Destrinche destrinche = new Destrinche(Manifesto, Cliente, Delivery, CodProduto, Produto, Deposito, Rua, Bloco, Nivel, Apartamento, Box, Endereco, contagemProduto, 0);
+                    Destrinche destrinche = new Destrinche(Manifesto, Cliente, Delivery, 
+                        CodProduto, Produto, Convert.ToInt32(Deposito), 
+                        Convert.ToInt32(Rua), Convert.ToInt32(Bloco), 
+                        Convert.ToInt32(Nivel), Convert.ToInt32(Apartamento), 
+                        Box, Endereco,
+                        contagemProduto, 0);
+
                     insereEmBancoASerImpresso(destrinche);
                 }
 

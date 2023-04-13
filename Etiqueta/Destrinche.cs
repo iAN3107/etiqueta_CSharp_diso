@@ -13,18 +13,18 @@ namespace Etiqueta
         public String Delivery { get; set; }
         public String CodProduto { get; set; }
         public String Produto { get; set; }
-        public String Deposito { get; set; }
-        public String Rua { get; set; }
-        public String Bloco { get; set; }
-        public String Nivel { get; set; }
-        public String Apartamento { get; set; }
+        public int Deposito { get; set; }
+        public int Rua { get; set; }
+        public int Bloco { get; set; }
+        public int Nivel { get; set; }
+        public int Apartamento { get; set; }
         public String Box { get; set; }
         public String Endereco { get; set; }
         public int NumeroEtiqueta { get; set; }
         public int TotalEtiqueta { get; set; }
 
 
-        public Destrinche(string manifesto, string cliente, string delivery, string codProduto, string produto, string deposito, string rua, string bloco, string nivel, string apartamento, string box, string endereco, int numeroEtiqueta, int totalEtiqueta)
+        public Destrinche(string manifesto, string cliente, string delivery, string codProduto, string produto, int deposito, int rua, int bloco, int nivel, int apartamento, string box, string endereco, int numeroEtiqueta, int totalEtiqueta)
         {
             Manifesto = manifesto;
             Cliente = cliente;
