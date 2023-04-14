@@ -36,6 +36,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.configuraçõesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.textSeparador = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -62,7 +64,7 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(12, 93);
+            this.button1.Location = new System.Drawing.Point(12, 153);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(243, 45);
             this.button1.TabIndex = 2;
@@ -72,7 +74,7 @@
             // 
             // textoLog
             // 
-            this.textoLog.Location = new System.Drawing.Point(12, 179);
+            this.textoLog.Location = new System.Drawing.Point(12, 226);
             this.textoLog.Multiline = true;
             this.textoLog.Name = "textoLog";
             this.textoLog.ReadOnly = true;
@@ -83,7 +85,7 @@
             // label2
             // 
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(12, 155);
+            this.label2.Location = new System.Drawing.Point(14, 202);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(243, 21);
             this.label2.TabIndex = 4;
@@ -97,7 +99,7 @@
             this.configuraçõesToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(267, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(268, 24);
             this.menuStrip1.TabIndex = 5;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -108,11 +110,33 @@
             this.configuraçõesToolStripMenuItem.Text = "Configurações";
             this.configuraçõesToolStripMenuItem.Click += new System.EventHandler(this.configuraçõesToolStripMenuItem_Click);
             // 
+            // textSeparador
+            // 
+            this.textSeparador.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textSeparador.Location = new System.Drawing.Point(12, 125);
+            this.textSeparador.MaxLength = 10;
+            this.textSeparador.Name = "textSeparador";
+            this.textSeparador.Size = new System.Drawing.Size(243, 22);
+            this.textSeparador.TabIndex = 7;
+            // 
+            // label3
+            // 
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(12, 90);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(243, 32);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "Separador";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label3.Click += new System.EventHandler(this.label3_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(267, 312);
+            this.ClientSize = new System.Drawing.Size(268, 343);
+            this.Controls.Add(this.textSeparador);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.textoLog);
             this.Controls.Add(this.button1);
@@ -143,6 +167,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem configuraçõesToolStripMenuItem;
+        private System.Windows.Forms.TextBox textSeparador;
+        private System.Windows.Forms.Label label3;
     }
 }
 

@@ -119,7 +119,7 @@ namespace Etiqueta
             return numeracaoEtiquetaTotal;
         }
 
-        static void imprimeTudoNoBancoDeDadosEDelete(String impressora)
+        static void imprimeTudoNoBancoDeDadosEDelete(String impressora, String separador)
         {
             string selectQueryString = "select * from destrinche order by deposito, rua, bloco";
             int numeracaoEtiqueta = 0;
@@ -157,7 +157,7 @@ namespace Etiqueta
                 Destrinche destrinche = new Destrinche(Manifesto, Cliente, Delivery, CodProduto, Produto, Convert.ToInt32(Deposito), Convert.ToInt32(Rua), Convert.ToInt32(Bloco), Convert.ToInt32(Nivel), Convert.ToInt32(Apartamento), Box, Endereco,
                     valorTotalNmrEtiqueta, valorTotalNmrTotalEtiqueta);
 
-                imprimeItems(destrinche, impressora, numeracaoTotalEtiqueta, numeracaoEtiqueta);
+                imprimeItems(destrinche, impressora, numeracaoTotalEtiqueta, numeracaoEtiqueta, separador);
 
                 //Console.WriteLine("Total etiquetas " + numeracaoEtiquetaTotal.ToString());
             }
@@ -226,7 +226,7 @@ namespace Etiqueta
             connection.Close();
         }
 
-        public static int retornaEtiquetasDestrinche(String manifesto, String impressora)
+        public static int retornaEtiquetasDestrinche(String manifesto, String impressora, String separador)
         {
             reabanco = retornaBanco();
             deletaTudoBancoDestrinche();
@@ -308,7 +308,7 @@ namespace Etiqueta
             }
             updateTotalEtiquetasEmBancoASerImpresso(ultimoCliente, contagemProduto);
 
-            imprimeTudoNoBancoDeDadosEDelete(impressora);
+            imprimeTudoNoBancoDeDadosEDelete(impressora, separador);
 
             connectionWms.Close();
 
@@ -332,7 +332,7 @@ namespace Etiqueta
         }
 
         public static void imprimeItems(Destrinche destrinche, String impressora,
-            int numeroTotalEtiquetas, int numeracaoEtiqueta)
+            int numeroTotalEtiquetas, int numeracaoEtiqueta, string separador)
         {
             int metadeComprimento = destrinche.Produto.Length / 2;
 
@@ -343,11 +343,13 @@ namespace Etiqueta
             string data = @now.ToShortDateString();
             string hora = now.ToShortTimeString();
 
+            Console.WriteLine(separador.ToString());
+
             RawPrinterHelper.SendStringToPrinter(szPrinterName: impressora, szString:
                 "\u0010CT~~CD,~CC^~CT~" +
                 "\r\n^XA~TA000~JSN^LT0^MNW^MTD^PON^PMN^LH0,0^JMA^PR2,2~SD15^JUS^LRN^CI0^XZ" +
                 "\r\n^XA" +
-               "\r\n^MMT" +
+                "\r\n^MMT" +
                 "\r\n^PW799" +
                 "\r\n^LL0320" +
                 "\r\n^LS0" +
@@ -376,11 +378,10 @@ namespace Etiqueta
                 "\r\n^FT339,243^A0N,29,38^FB437,1,0,C^FH\\^FD"+ produtoParte2 + "^FS" +
                 "\r\n^FT18,47^A0N,28,28^FH\\^FD" + @data.ToString() +"^FS" +
                 "\r\n^FT169,47^A0N,28,28^FH\\^FD" + @hora.ToString() + "^FS" +
-                "\r\n^FT371,134^A0N,28,28^FH\\^FD" + destrinche.Box + "^FS" +
+                "\r\n^FT369,109^A0N,28,28^FH\\^FD" + destrinche.Box + "^FS" +
                 "\r\n^FT709,47^A0N,28,28^FH\\^FD"+ numeracaoEtiqueta.ToString() +"/"+ numeroTotalEtiquetas.ToString() +"^FS" +
+                "\r\n^FT313,134^A0N,28,28^FB163,1,0,C^FH\\^FD" + separador.ToString() + "^FS" +
                 "\r\n^PQ1,0,1,Y^XZ\r\n");
-
-            
         }
     }
 }

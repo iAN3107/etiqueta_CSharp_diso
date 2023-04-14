@@ -48,13 +48,14 @@ namespace Etiqueta
                 button1.Enabled = false;
                 String impressora = Dados.retornaImpressora();
                 String manifesto = textoManifesto.Text;
+                String separador = textSeparador.Text;
                 if (!Dados.verificaExistenciaManifesto(manifesto))
                 {
                     MessageBox.Show("Este código de manifesto não existe!");
                 }
                 else
                 {
-                    int totalEtiquetas = Dados.retornaEtiquetasDestrinche(manifesto, impressora);
+                    int totalEtiquetas = Dados.retornaEtiquetasDestrinche(manifesto, impressora, separador);
                     DateTime now = DateTime.Now;
                     string data = now.ToShortDateString();
                     string hora = now.ToShortTimeString();
@@ -88,6 +89,11 @@ namespace Etiqueta
         }
 
         private void textoManifesto_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
         {
 
         }
