@@ -343,7 +343,7 @@ namespace Etiqueta
             string data = @now.ToShortDateString();
             string hora = now.ToShortTimeString();
 
-            Console.WriteLine(separador.ToString());
+            //Console.WriteLine(separador.ToString());
 
             RawPrinterHelper.SendStringToPrinter(szPrinterName: impressora, szString:
                 "\u0010CT~~CD,~CC^~CT~" +

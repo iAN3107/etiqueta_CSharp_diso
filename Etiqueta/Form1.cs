@@ -55,7 +55,7 @@ namespace Etiqueta
                 }
                 else
                 {
-                    int totalEtiquetas = Dados.retornaEtiquetasDestrinche(manifesto, impressora, separador);
+                    int totalEtiquetas = Dados.retornaEtiquetasDestrinche(manifesto, impressora, separador.ToUpper());
                     DateTime now = DateTime.Now;
                     string data = now.ToShortDateString();
                     string hora = now.ToShortTimeString();
