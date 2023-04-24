@@ -22,9 +22,14 @@ namespace Etiqueta
         public String Endereco { get; set; }
         public int NumeroEtiqueta { get; set; }
         public int TotalEtiqueta { get; set; }
+        public String Tipo { get; set; }
+        public int TotalPallet { get; set; }
+        public int TotalCaixas { get; set; }
 
-
-        public Destrinche(string manifesto, string cliente, string delivery, string codProduto, string produto, int deposito, int rua, int bloco, int nivel, int apartamento, string box, string endereco, int numeroEtiqueta, int totalEtiqueta)
+        public Destrinche(string manifesto, string cliente, string delivery, 
+            string codProduto, string produto, int deposito, int rua, int bloco, 
+            int nivel, int apartamento, string box, string endereco, int numeroEtiqueta, 
+            int totalEtiqueta, string tipo, int totalPallet, int totalCaixas)
         {
             Manifesto = manifesto;
             Cliente = cliente;
@@ -40,6 +45,9 @@ namespace Etiqueta
             Endereco = endereco;
             NumeroEtiqueta = numeroEtiqueta;
             TotalEtiqueta = totalEtiqueta;
+            Tipo = tipo;
+            TotalPallet = totalPallet;
+            TotalCaixas = totalCaixas;
         }
     }
 }

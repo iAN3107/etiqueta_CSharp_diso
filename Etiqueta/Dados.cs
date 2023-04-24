@@ -151,21 +151,27 @@ namespace Etiqueta
                 String Endereco = reader["Endereco"].ToString();
                 String NumeroEtiqueta = reader["numeroEtiqueta"].ToString();
                 String TotalEtiqueta = reader["totalEtiqueta"].ToString();
+                String Tipo = reader["tipo"].ToString();
+                String TotalPallet = reader["totalPallet"].ToString();
+                String TotalCaixa = reader["totalCaixas"].ToString();
                 int valorTotalNmrEtiqueta = Convert.ToInt32(Double.Parse(NumeroEtiqueta));
                 int valorTotalNmrTotalEtiqueta = Convert.ToInt32(Double.Parse(TotalEtiqueta));
+                int valorTotalNmrTotalPallet = Convert.ToInt32(Double.Parse(TotalPallet));
+                int valorTotalNmrTotalCaixas = Convert.ToInt32(Double.Parse(TotalCaixa));
 
-                Destrinche destrinche = new Destrinche(Manifesto, Cliente, Delivery, CodProduto, Produto, Convert.ToInt32(Deposito), Convert.ToInt32(Rua), Convert.ToInt32(Bloco), Convert.ToInt32(Nivel), Convert.ToInt32(Apartamento), Box, Endereco,
-                    valorTotalNmrEtiqueta, valorTotalNmrTotalEtiqueta);
+                Destrinche destrinche = new Destrinche(Manifesto, Cliente, Delivery, CodProduto, Produto,
+                    Convert.ToInt32(Deposito), Convert.ToInt32(Rua), Convert.ToInt32(Bloco),
+                    Convert.ToInt32(Nivel), Convert.ToInt32(Apartamento), Box, Endereco,
+                    valorTotalNmrEtiqueta, valorTotalNmrTotalEtiqueta,
+                    Tipo, valorTotalNmrTotalPallet, valorTotalNmrTotalCaixas);
 
-                imprimeItems(destrinche, impressora, numeracaoTotalEtiqueta, numeracaoEtiqueta, separador);
+                imprimeItems(destrinche, impressora, numeracaoTotalEtiqueta, numeracaoEtiqueta, separador, Tipo, valorTotalNmrTotalPallet);
 
                 //Console.WriteLine("Total etiquetas " + numeracaoEtiquetaTotal.ToString());
             }
 
             connection.Close();
         }
-
-        //public static bool verificaSeManifestoJaFoiImpresso() { }
         public static bool verificaExistenciaManifesto(String manifesto)
         {
             try
@@ -200,7 +206,7 @@ namespace Etiqueta
 
         public static void insereEmBancoASerImpresso(Destrinche destrinche)
         {
-            string queryString = "insert into destrinche values('"+ destrinche.Manifesto + "','" + destrinche.Cliente + "','" + destrinche.Delivery + "','" + destrinche.CodProduto + "','" + destrinche.Produto + "','" + destrinche.Deposito +"','" + destrinche.Rua + "','" + destrinche.Bloco + "','" + destrinche.Nivel + "','" + destrinche.Apartamento + "','" + destrinche.Box + "','" + destrinche.Endereco + "'," + destrinche.NumeroEtiqueta + "," + destrinche.TotalEtiqueta + ")";
+            string queryString = "insert into destrinche values('"+ destrinche.Manifesto + "','" + destrinche.Cliente + "','" + destrinche.Delivery + "','" + destrinche.CodProduto + "','" + destrinche.Produto + "','" + destrinche.Deposito +"','" + destrinche.Rua + "','" + destrinche.Bloco + "','" + destrinche.Nivel + "','" + destrinche.Apartamento + "','" + destrinche.Box + "','" + destrinche.Endereco + "'," + destrinche.NumeroEtiqueta + "," + destrinche.TotalEtiqueta + ",'" + destrinche.Tipo + "'," + destrinche.TotalPallet + ", " + destrinche.TotalCaixas + ")";
             SQLiteCommand command = new SQLiteCommand(queryString, connection);
             connection.Open();
             command.ExecuteNonQuery();
@@ -268,20 +274,51 @@ namespace Etiqueta
 
                 ultimoCliente = Cliente;
 
-                for (var i = 0; i < valorTotal; i++)
+
+                if (valorTotal < 15) {
+                    for (var i = 0; i < valorTotal; i++)
+                    {
+                        contagemProduto++;
+                        contagemEtiquetasTotal++;
+
+                        //modificado depois para o total correto
+                        int totalEtiqueta = 0;
+                        string tipoArmazenagem = "CX";
+                        //para caixa sempre será 0, 
+                        int totalPallet = 0;
+
+                        Destrinche destrinche = new Destrinche(Manifesto, Cliente, Delivery,
+                            CodProduto, Produto, Convert.ToInt32(Deposito),
+                            Convert.ToInt32(Rua), Convert.ToInt32(Bloco),
+                            Convert.ToInt32(Nivel), Convert.ToInt32(Apartamento),
+                            Box, Endereco,
+                            contagemProduto, totalEtiqueta, tipoArmazenagem, totalPallet, valorTotal);
+
+                        insereEmBancoASerImpresso(destrinche);
+                    } }
+
+                if (valorTotal >= 15)
                 {
-                    contagemProduto++; 
-                    contagemEtiquetasTotal++;
-                    Destrinche destrinche = new Destrinche(Manifesto, Cliente, Delivery, 
-                        CodProduto, Produto, Convert.ToInt32(Deposito), 
-                        Convert.ToInt32(Rua), Convert.ToInt32(Bloco), 
-                        Convert.ToInt32(Nivel), Convert.ToInt32(Apartamento), 
-                        Box, Endereco,
-                        contagemProduto, 0);
+                    contagemProduto++;
+                    contagemEtiquetasTotal = contagemEtiquetasTotal + valorTotal;
+
+                    //modificado depois para o total correto
+                    int totalEtiqueta = 0;
+                    string tipoArmazenagem = "PAL";
+                    //será responsável para falar até onde a numercao total das etiquetas vai
+                    int totalPallet = contagemProduto - 1 + valorTotal;
+
+                    Destrinche destrinche = new Destrinche(Manifesto, Cliente, Delivery,
+                         CodProduto, Produto, Convert.ToInt32(Deposito),
+                         Convert.ToInt32(Rua), Convert.ToInt32(Bloco),
+                         Convert.ToInt32(Nivel), Convert.ToInt32(Apartamento),
+                         Box, Endereco,
+                         contagemProduto, totalEtiqueta, tipoArmazenagem, totalPallet, valorTotal);
 
                     insereEmBancoASerImpresso(destrinche);
-                }
 
+                    contagemProduto = totalPallet;
+                }
 
                 //imprimeItems(destrinche, valorTotal, impressora);
                 /*
@@ -332,18 +369,38 @@ namespace Etiqueta
         }
 
         public static void imprimeItems(Destrinche destrinche, String impressora,
-            int numeroTotalEtiquetas, int numeracaoEtiqueta, string separador)
+            int numeroTotalEtiquetas, int numeracaoEtiqueta, string separador, string tipo, int totalPallet)
         {
             int metadeComprimento = destrinche.Produto.Length / 2;
 
             String produtoParte1 = destrinche.Produto.Substring(0, metadeComprimento);
             String produtoParte2 = destrinche.Produto.Substring(metadeComprimento);
 
+            String linhaDeTotalEtiqueta = "\r\n^FT709,47^A0N,28,28^FH\\^FD" + numeracaoEtiqueta.ToString() + "/" + numeroTotalEtiquetas + "^FS";
+            
+            //variavel
+            String linhaDeTotalVolmetriaEtiqueta = "";
+            String linhaDeCaixasTotais = "";
+            //
+
             DateTime now = DateTime.Now;
             string data = @now.ToShortDateString();
             string hora = now.ToShortTimeString();
 
+            if (tipo == "CX")
+            {
+                 linhaDeTotalVolmetriaEtiqueta = "\r\n^FT557,308^A0N,50,55^FH\\^FD" + destrinche.NumeroEtiqueta.ToString() + "/" + destrinche.TotalEtiqueta.ToString() + "^FS";
+            }
+
             //Console.WriteLine(separador.ToString());
+
+            //se for pallet imprime de uma forma, se não é outra
+            if (tipo == "PAL")
+            {
+                //totalPallet = numeracaoEtiqueta - totalPallet + 1;
+                 linhaDeTotalVolmetriaEtiqueta = "\r\n^FT557,308^A0N,50,55^FH\\^FD x/" + destrinche.TotalEtiqueta.ToString() + "^FS";
+                 linhaDeCaixasTotais = "\r\n^FT315,308^A0N,50,55^FB169,1,0,C^FH\\^FD" + destrinche.TotalCaixas.ToString() + "cx^FS";
+            }
 
             RawPrinterHelper.SendStringToPrinter(szPrinterName: impressora, szString:
                 "\u0010CT~~CD,~CC^~CT~" +
@@ -370,7 +427,7 @@ namespace Etiqueta
                 "\r\n^FT101,309^A0N,28,31^FB30,1,0,C^FH\\^FD" + destrinche.Bloco + "^FS" +
                 "\r\n^FT139,309^A0N,28,31^FB30,1,0,C^FH\\^FD" + destrinche.Nivel + "^FS" +
                 "\r\n^FT175,309^A0N,28,31^FB30,1,0,C^FH\\^FD" + destrinche.Apartamento + "^FS" +
-                "\r\n^FT557,308^A0N,50,55^FH\\^FD" + destrinche.NumeroEtiqueta.ToString() + "/" + destrinche.TotalEtiqueta.ToString() + "^FS" +
+                linhaDeTotalVolmetriaEtiqueta +
                 "\r\n^FT148,184^A0N,28,28^FH\\^FDCOD^FS" +
                 "\r\n^FT66,230^A0N,56,55^FB216,1,0,C^FH\\^FD" + destrinche.CodProduto + "^FS" +
                 "\r\n^FT494,178^A0N,28,28^FH\\^FDPRODUTO^FS" +
@@ -379,8 +436,9 @@ namespace Etiqueta
                 "\r\n^FT18,47^A0N,28,28^FH\\^FD" + @data.ToString() +"^FS" +
                 "\r\n^FT169,47^A0N,28,28^FH\\^FD" + @hora.ToString() + "^FS" +
                 "\r\n^FT369,109^A0N,28,28^FH\\^FD" + destrinche.Box + "^FS" +
-                "\r\n^FT709,47^A0N,28,28^FH\\^FD"+ numeracaoEtiqueta.ToString() +"/"+ numeroTotalEtiquetas.ToString() +"^FS" +
+                linhaDeTotalEtiqueta +
                 "\r\n^FT313,134^A0N,28,28^FB163,1,0,C^FH\\^FD" + separador.ToString() + "^FS" +
+                linhaDeCaixasTotais +
                 "\r\n^PQ1,0,1,Y^XZ\r\n");
         }
     }
