@@ -70,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Banco.cs" />
+    <Compile Include="ImpressaoEtiquetasSemPallet.cs" />
     <Compile Include="Dados.cs" />
     <Compile Include="Destrinche.cs" />
     <Compile Include="Form2.cs">

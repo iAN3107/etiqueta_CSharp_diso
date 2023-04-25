@@ -38,6 +38,7 @@
             this.configuraçõesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.textSeparador = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.checkboxSemPallet = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -64,7 +65,7 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(12, 153);
+            this.button1.Location = new System.Drawing.Point(12, 176);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(243, 45);
             this.button1.TabIndex = 2;
@@ -74,7 +75,7 @@
             // 
             // textoLog
             // 
-            this.textoLog.Location = new System.Drawing.Point(12, 226);
+            this.textoLog.Location = new System.Drawing.Point(12, 249);
             this.textoLog.Multiline = true;
             this.textoLog.Name = "textoLog";
             this.textoLog.ReadOnly = true;
@@ -85,7 +86,7 @@
             // label2
             // 
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(14, 202);
+            this.label2.Location = new System.Drawing.Point(14, 225);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(243, 21);
             this.label2.TabIndex = 4;
@@ -130,11 +131,24 @@
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
+            // checkboxSemPallet
+            // 
+            this.checkboxSemPallet.AutoSize = true;
+            this.checkboxSemPallet.Checked = true;
+            this.checkboxSemPallet.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkboxSemPallet.Location = new System.Drawing.Point(43, 153);
+            this.checkboxSemPallet.Name = "checkboxSemPallet";
+            this.checkboxSemPallet.Size = new System.Drawing.Size(186, 17);
+            this.checkboxSemPallet.TabIndex = 8;
+            this.checkboxSemPallet.Text = "Impressão sem etiqueta de Pallets";
+            this.checkboxSemPallet.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(268, 343);
+            this.ClientSize = new System.Drawing.Size(268, 375);
+            this.Controls.Add(this.checkboxSemPallet);
             this.Controls.Add(this.textSeparador);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -169,6 +183,7 @@
         private System.Windows.Forms.ToolStripMenuItem configuraçõesToolStripMenuItem;
         private System.Windows.Forms.TextBox textSeparador;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.CheckBox checkboxSemPallet;
     }
 }
 

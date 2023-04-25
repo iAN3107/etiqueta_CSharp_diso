@@ -101,7 +101,7 @@ namespace Etiqueta
 
         }
 
-        static int retornaNumeroTotalImpressora()
+        public static int retornaNumeroTotalImpressora()
         {
             int numeracaoEtiquetaTotal = 0;
             string selectQueryString = "select * from destrinche order by deposito, rua, bloco";
@@ -165,7 +165,7 @@ namespace Etiqueta
                     valorTotalNmrEtiqueta, valorTotalNmrTotalEtiqueta,
                     Tipo, valorTotalNmrTotalPallet, valorTotalNmrTotalCaixas);
 
-                imprimeItems(destrinche, impressora, numeracaoTotalEtiqueta, numeracaoEtiqueta, separador, Tipo, valorTotalNmrTotalPallet);
+                //imprimeItems(destrinche, impressora, numeracaoTotalEtiqueta, numeracaoEtiqueta, separador, Tipo, valorTotalNmrTotalPallet);
 
                 //Console.WriteLine("Total etiquetas " + numeracaoEtiquetaTotal.ToString());
             }

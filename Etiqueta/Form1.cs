@@ -55,7 +55,13 @@ namespace Etiqueta
                 }
                 else
                 {
-                    int totalEtiquetas = Dados.retornaEtiquetasDestrinche(manifesto, impressora, separador.ToUpper());
+                    var impressaoEtiquetas = Dados.retornaEtiquetasDestrinche(manifesto, impressora, separador.ToUpper());
+
+                    if (checkboxSemPallet.Checked) {
+                        impressaoEtiquetas = ImpressaoEtiquetasSemPallet.retornaEtiquetasDestrinche(manifesto, impressora, separador.ToUpper());
+                    }
+
+                    int totalEtiquetas = impressaoEtiquetas;
                     DateTime now = DateTime.Now;
                     string data = now.ToShortDateString();
                     string hora = now.ToShortTimeString();
@@ -97,5 +103,7 @@ namespace Etiqueta
         {
 
         }
+
+
     }
 }
